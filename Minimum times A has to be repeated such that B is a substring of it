@@ -1,0 +1,61 @@
+class Solution {
+  public:
+    
+//Very easy if you already know the implementation and logics of //KMP algo.
+
+int solve(string &s, int size)
+    {
+        int n = s.size();
+        int lps[n + 1] = {0};
+        
+        int i = 1, len = 0;
+        while(i < n)
+        {
+            if(s[len] == s[i])
+            {
+                lps[i] = ++len;
+                i++;
+            }
+            else
+            {
+                if(len > 0)
+                {
+                    len = lps[len - 1];
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            
+            if(len == size)
+                return 1;
+        }
+        return -1;
+    }
+    int minRepeats(string A, string B) {
+        string temp = A;
+        int ans = 1;
+        while(temp.size() < B.size())
+        {
+            temp += A;
+            ans++;
+        }
+        temp = B + "#" + temp;
+        
+        int res = solve(temp, B.size());
+        if(res == -1)
+        {
+//trying by adding A one more time
+            ans++;
+            temp += A;
+            
+            int res = solve(temp, B.size());
+            if(res == -1)
+                return -1;
+            else
+                return ans;
+        }
+        else
+            return ans;}
+};
