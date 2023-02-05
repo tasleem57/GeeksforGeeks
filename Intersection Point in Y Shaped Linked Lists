@@ -1,0 +1,32 @@
+class Solution
+{
+public:
+    int intersectPoint(Node* head1, Node* head2)
+    {
+        int n1 = 0, n2 = 0;
+        Node* t1 = head1, * t2 = head2;
+        while(t1 != NULL){
+            n1++;
+            t1 = t1->next;
+        }
+        while(t2 != NULL){
+            n2++;
+            t2 = t2->next;
+        }
+        t1 = head1, t2 = head2;
+        if(n2 > n1){
+            swap(t1, t2);
+        }
+        int d = abs(n1 - n2);
+        while(d){
+            d--;
+            t1 = t1->next;
+        }
+        while(t1 != NULL && t2 != NULL){
+            if(t1 == t2) return t1->data;
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+        return -1;
+    }
+};
